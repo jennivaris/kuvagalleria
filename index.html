@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: url("img/bg/leaves-bg-light.jpg");
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /*overflow: hidden;*/
+            /*Haluan luoda bodyyn overflow:hidden-ominaisuuden kun kuvankatselu on päällä*/
+
+
+        }
+
+        main {
+
+            /*margin-top: 2rem;*/
+            /*min-height: calc(100vh - 60px);*/
+
+        }
+
+        h1 {
+            text-align: center;
+            color: rgb(75, 70, 70);
+            font-size: 3rem;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: 400;
+            letter-spacing: 1.8px;
+
+        }
+
+        #grid {
+            text-align: center;
+        }
+
+        .ImgThumbnail {
+            border-radius: 5px;
+            cursor: pointer;
+            /*transition: 0.3s;*/
+            height: 250px;
+            width: 250px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s linear;
+        }
+
+
+        .ImgThumbnail:hover {
+            opacity: 0.5;
+
+        }
+
+
+        .ImgThumbnail:nth-of-type(1) {
+            /*margin-left: 20%;*/
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 10px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modalImage {
+            display: block;
+            max-height: 98vh;
+            max-width: 98vw;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+
+        .hidden-textbox {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 20vh;
+            opacity: 0;
+            /*javascriptillä asennetaan opacityksi 0.6 samalla kun teksti asetetaan elementtiin*/
+            background-color: black;
+            z-index: 3;
+
+            color: white;
+            font-size: 22px;
+            letter-spacing: 2.0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 2rem 1rem;
+            transition: 0.5s;
+        }
+
+
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        .close {
+            position: absolute;
+            display: flex;
+            top: 30px;
+            right: 35px;
+            width: 34px;
+            height: 36px;
+            background-color: rgb(25, 25, 24);
+            border-radius: 2px;
+            z-index: 1;
+            text-align: center;
+            color: #f1f1f1;
+            font-size: 55px;
+            font-weight: bold;
+            transition: 0.3s;
+            padding: 3px;
+
+        }
+
+        .x {
+            position: relative;
+            display: inline-flex;
+            text-align: center;
+            line-height: 35px;
+            transform: translateY(-10px) translateX(-5px);
+        }
+
+
+        .close:hover,
+        .close:focus {
+            color: rgb(255, 0, 0);
+            cursor: pointer;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: block;
+            height: 60px;
+            background-color: turquoise;
+            opacity: 0.6;
+            text-align: center;
+            padding: 20px;
+            color: black;
+        }
+
+        .wavy {
+            position: relative;
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .wavy span {
+
+            position: relative;
+            display: inline-block;
+            color: turquoise;
+            font-size: 2em;
+            /*text-transform: uppercase;*/
+            animation: animate 2s 2 forwards ease-in-out;
+            /*2 forwards: toistaa animaation 2x */
+            /* infinite*/
+            animation-fill-mode: forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        @keyframes animate {
+
+            0% {
+                transform: translateY(0px);
+            }
+
+            20% {
+                transform: translateY(-20px);
+            }
+
+            40%,
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @media screen and (max-width:500px) {
+            .hidden-textbox {
+
+                font-size: 18px;
+                letter-spacing: 1.5;
+                padding: 2rem 0.5rem;
+            }
+
+            .wavy {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media screen and (max-width:768px) {
+            .ImgThumbnail {
+                height: 150px;
+                width: 150px;
+            }
+        }
+
+        @media screen and (min-width: 769px) and (max-width:1170px) {
+            .ImgThumbnail {
+                height: 200px;
+                width: 200px;
+            }
+
+            .wavy span {
+                font-size: 2.5em;
+            }
+
+            /*suurennetaan otsikkoa*/
+        }
+
+        @media screen and (min-width:1171px) {
+            .ImgThumbnail {
+                height: 250px;
+                width: 250px;
+            }
+
+            .wavy span {
+                font-size: 3em;
+            }
+        }
+
+        @media screen and (max-height:400px) {
+            footer {
+                height: 40px;
+                padding: 10px 0;
+            }
+
+            .wavy span {
+                font-size: 1.5em;
+            }
+
+            .wavy {
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+        }
+    </style>
+    <title>Kesäinen kuvagalleria, Kuvia Suomesta kesällä 2020</title>
+</head>
+
+<body>
+    <main id="kuva-galleria">
+        <div class="wavy">
+            <span style="--i:1">K</span>
+            <span style="--i:2">e</span>
+            <span style="--i:3">s</span>
+            <span style="--i:4">ä</span>
+            <span style="--i:5">i</span>
+            <span style="--i:6">s</span>
+            <span style="--i:7">i</span>
+            <span style="--i:8">ä</span>
+            <span style="--i:9"> </span>
+            <span style="--i:10"> </span>
+            <span style="--i:11">k</span>
+            <span style="--i:12">u</span>
+            <span style="--i:13">v</span>
+            <span style="--i:14">i</span>
+            <span style="--i:15">a</span>
+            <span style="--i:16"> </span>
+            <span style="--i:17"> </span>
+            <span style="--i:18">S</span>
+            <span style="--i:19">u</span>
+            <span style="--i:20">o</span>
+            <span style="--i:21">m</span>
+            <span style="--i:22">e</span>
+            <span style="--i:23">s</span>
+            <span style="--i:24">t</span>
+            <span style="--i:25">a</span>
+            <span style="--i:26"> </span><br>
+            <span style="--i:27">2</span>
+            <span style="--i:28">0</span>
+            <span style="--i:29">2</span>
+            <span style="--i:30">0</span>
+        </div>
+
+
+        <div id="grid">
+            <img class="ImgThumbnail" src="img/12lumme.jpg" alt="Lumpeenkukka" />
+            <img class="ImgThumbnail" src="img/10uimaranta.jpg" alt="Uimaranta Virroilla" />
+            <img class="ImgThumbnail" src="img/0frodot.jpg" alt="Frodoja Helsingin Alppipuistossa" />
+            <img src="img/16tammenterho.jpg" alt="Tammenterho" class="ImgThumbnail">
+            <img src="img/19perhonen.jpg" alt="Nokkosperhonen" class="ImgThumbnail">
+            <img src="img/22kurpitsa.jpg" alt="Yhteisöpuutarhan satoa Hermannissa" class="ImgThumbnail">
+            <img src="img/7karpanen.jpg" alt="Kesäkärpänen" class="ImgThumbnail">
+            <img src="img/9sammakko.jpg" alt="Maastoutunut sammakko" class="ImgThumbnail">
+        </div>
+
+
+        <div class="modal">
+            <span class="close"><span class="x">×</span></span>
+            <div class="imagewithtext">
+                <img class="modalImage" id="img01" />
+                <div class="hidden-textbox"></div>
+            </div>
+        </div>
+
+
+    </main>
+    <footer>
+        &copy; 2021
+    </footer>
+    <script>
+        var body = document.querySelector("body");//dokumentin body
+        var modalEle = document.querySelector(".modal");//Musta overlay
+        var modalImage = document.querySelector(".modalImage"); //Laatikko johon kuva tulee
+        var textbox = document.querySelector(".hidden-textbox"); //palkki johon kuvateksti tulee
+        var imagewithtext = document.querySelector(".imagewithtext"); //Kuvalaatikko+tekstipalkki. Teksti peittää kuvan osin joten  
+        //tarvitsen onmouseover-funktiota varten niille myös yhteisen elementin        
+        Array.from(document.querySelectorAll(".ImgThumbnail")).forEach(item => { //Tehdään array kaikista kuvista ja kutsutaan forEach-funktiota
+            item.addEventListener("click", event => {
+                body.style.overflow = "hidden";//Haluan ottaa taustan skrollauksen pois päältä
+                modalEle.style.display = "block"; //musta overlay tulee näkyväksi
+                modalImage.src = event.target.src; //kuvaelementti tulee näkyväksi ja sen lähteeksi tulee kulloisenkin kuvan lähde
+
+                function ajastinfunktio() {
+
+                    timer = setTimeout(function () {//aaltosulkeiden sisällä oleva koodi toteutetaan kun 4s on kulunut.
+                        textbox.style.opacity = 0;
+                        clearTimeout(timer);
+                        //Teksti on näkyvissä 3s. Tässä kohtaa poistetaan teksti näkyvistä. En voi poistaa mitään muuttujaa tai koodi ei toimi enää.
+                        //Haluan piilottaa textbox-elementin lisäämällä sille läpinäkyvyysmääreen.  
+                    }, 3000);
+                }
+
+                imagewithtext.onmouseover = function showTitle() { //Kuvakentän mouseover-funktio
+                    var teksti = event.target.alt; //teksti-muuttuja on kuvan alt-teksti
+                    textbox.style.opacity = .6;
+                    textbox.innerHTML = teksti; //textbox-elementtiin siirretään näytettäväksi tämä alt-teksti
+
+                    ajastinfunktio();
+                    //clearTimeout(timer); Mutta: Koodi ei toimi jos ajastimen nollaa tässä kohtaa 
+                    //sillä funktiota seuraava koodi suoritetaan ilmeisesti ennen kuin ajastinfunktio on suoritettu loppuun. 
+                    //Ajastin pitää siis nollata ajastinfunktion sisällä viimeisellä rivillä.
+                }
+
+                modalImage.onmouseout = function () {//ajastin alkaa alusta kun hiiri viedään pois kuvan päältä ja tuodaan takaisin kuvan päälle, jolloin mouseoverfunktio toistuu taas.
+                    textbox.style.opacity = 0;
+                    clearTimeout(timer);
+                }
+
+            });
+        });
+        document.querySelector(".close").addEventListener("click", () => {  //kun close-nappia painetaan...
+            modalEle.style.display = "none"; //musta overlay katoaa
+            body.style.overflow = "auto"; //body rullaa taas normaalisti
+        });
+    </script>
+</body>
+
+</html>
