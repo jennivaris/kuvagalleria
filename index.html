@@ -318,14 +318,14 @@
 
 
         <div id="grid">
-            <img class="ImgThumbnail" src="img/12lumme.jpg" alt="Lumpeenkukka" />
-            <img class="ImgThumbnail" src="img/10uimaranta.jpg" alt="Uimaranta Virroilla" />
-            <img class="ImgThumbnail" src="img/0frodot.jpg" alt="Frodoja Helsingin Alppipuistossa" />
-            <img src="img/16tammenterho.jpg" alt="Tammenterho" class="ImgThumbnail">
-            <img src="img/19perhonen.jpg" alt="Nokkosperhonen" class="ImgThumbnail">
-            <img src="img/22kurpitsa.jpg" alt="Yhteisöpuutarhan satoa Hermannissa" class="ImgThumbnail">
-            <img src="img/7karpanen.jpg" alt="Kesäkärpänen" class="ImgThumbnail">
-            <img src="img/9sammakko.jpg" alt="Maastoutunut sammakko" class="ImgThumbnail">
+            <img class="ImgThumbnail" src="img/lumme-sm.jpg" alt="Lumpeenkukka" />
+            <img class="ImgThumbnail" src="img/uimaranta-sm.jpg" alt="Uimaranta Virroilla" />
+            <img class="ImgThumbnail" src="img/frodot-sm.jpg" alt="Frodoja Helsingin Alppipuistossa" />
+            <img src="img/tammenterho-sm.jpg" alt="Tammenterho" class="ImgThumbnail">
+            <img src="img/perhonen-sm.jpg" alt="Nokkosperhonen" class="ImgThumbnail">
+            <img src="img/kurpitsa-sm.jpg" alt="Yhteisöpuutarhan satoa Hermannissa" class="ImgThumbnail">
+            <img src="img/karpanen-sm.jpg" alt="Kesäkärpänen" class="ImgThumbnail">
+            <img src="img/sammakko-sm.jpg" alt="Maastoutunut sammakko" class="ImgThumbnail">
         </div>
 
 
@@ -353,7 +353,10 @@
             item.addEventListener("click", event => {
                 body.style.overflow = "hidden";//Haluan ottaa taustan skrollauksen pois päältä
                 modalEle.style.display = "block"; //musta overlay tulee näkyväksi
-                modalImage.src = event.target.src; //kuvaelementti tulee näkyväksi ja sen lähteeksi tulee kulloisenkin kuvan lähde
+                //modalImage.src = event.target.src; //kuvaelementti tulee näkyväksi ja sen lähteeksi tulee kulloisenkin kuvan lähde
+                var kuvake = event.target.src;
+                kuva = kuvake.substring(0, kuvake.length - 7) + '.jpg';
+                modalImage.src = kuva;
 
                 function ajastinfunktio() {
 
