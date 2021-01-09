@@ -86,6 +86,10 @@
             left: 0;
         }
 
+        .hd {
+            display: none;
+        }
+
         .hidden-textbox {
             position: fixed;
             bottom: 0;
@@ -336,7 +340,14 @@
                 <div class="hidden-textbox"></div>
             </div>
         </div>
-
+        <img id="lumme.jpg" class="hd" src="img/lumme.jpg" alt="">
+        <img id="uimaranta.jpg" class="hd" src="img/uimaranta.jpg" alt="">
+        <img id="frodot.jpg" class="hd" src="img/frodot.jpg" alt="">
+        <img id="tammenterho.jpg" class="hd" src="img/tammenterho.jpg" alt="">
+        <img id="perhonen.jpg" class="hd" src="img/perhonen.jpg" alt="">
+        <img id="kurpitsa.jpg" class="hd" src="img/kurpitsa.jpg" alt="">
+        <img id="karpanen.jpg" class="hd" src="img/karpanen.jpg" alt="">
+        <img id="sammakko.jpg" class="hd" src="img/sammakko.jpg" alt="">
 
     </main>
     <footer>
@@ -351,11 +362,12 @@
         //tarvitsen onmouseover-funktiota varten niille myös yhteisen elementin        
         Array.from(document.querySelectorAll(".ImgThumbnail")).forEach(item => { //Tehdään array kaikista kuvista ja kutsutaan forEach-funktiota
             item.addEventListener("click", event => {
+                var kuvake = event.target.src;
+                kuva = kuvake.substring(0, kuvake.length - 7) + '.jpg';
                 body.style.overflow = "hidden";//Haluan ottaa taustan skrollauksen pois päältä
                 modalEle.style.display = "block"; //musta overlay tulee näkyväksi
                 //modalImage.src = event.target.src; //kuvaelementti tulee näkyväksi ja sen lähteeksi tulee kulloisenkin kuvan lähde
-                var kuvake = event.target.src;
-                kuva = kuvake.substring(0, kuvake.length - 7) + '.jpg';
+
                 modalImage.src = kuva;
 
                 function ajastinfunktio() {
